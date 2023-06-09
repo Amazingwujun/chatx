@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: chatx-broker
+  profiles:
+    active: dev
+
+chatx:
+  name: chatx-broker

@@ -1,0 +1,15 @@
+### java ###
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+.idea
+*.iws
+*.iml
+*.ipr
+
+### qt ###
+cmake-build-debug
+cmake-build-release

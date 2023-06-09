@@ -1,0 +1,14 @@
+2023-06-05 15:22:29.969 INFO  11296 --- [main] [55] com.chatx.broker.BrokerApplication       : Starting BrokerApplication using Java 19.0.1 on DESKTOP-7TRMIPC with PID 11296 (E:\Project\chatx\server\broker\target\classes started by admin in E:\Project\chatx\server)
+2023-06-05 15:22:29.971 INFO  11296 --- [main] [631] com.chatx.broker.BrokerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-06-05 15:22:30.195 INFO  11296 --- [main] [262] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-05 15:22:30.197 INFO  11296 --- [main] [132] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-05 15:22:30.211 INFO  11296 --- [main] [201] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-05 15:22:30.478 INFO  11296 --- [nioEventLoopGroup-2-1] [148] io.netty.handler.logging.LoggingHandler  : [id: 0x0a288547] REGISTERED
+2023-06-05 15:22:30.479 INFO  11296 --- [nioEventLoopGroup-2-1] [148] io.netty.handler.logging.LoggingHandler  : [id: 0x0a288547] BIND: 0.0.0.0/0.0.0.0:1203
+2023-06-05 15:22:30.480 INFO  11296 --- [nioEventLoopGroup-2-1] [148] io.netty.handler.logging.LoggingHandler  : [id: 0x0a288547, L:/[0:0:0:0:0:0:0:0]:1203] ACTIVE
+2023-06-05 15:22:30.886 INFO  11296 --- [main] [61] com.chatx.broker.BrokerApplication       : Started BrokerApplication in 1.223 seconds (JVM running for 1.619)
+2023-06-05 15:22:30.889 INFO  11296 --- [main] [68] com.chatx.commons.ChatxApp               : 配置打印: ChatxProperties(name=chatx-broker, desc=null, httpClient=ChatxProperties.HttpClientProperties(enabled=false, connectTimeout=PT3S, readTimeout=PT3S))
+2023-06-05 15:22:30.891 INFO  11296 --- [main] [68] com.chatx.commons.ChatxApp               : 配置打印: BizProperties(port=1203, soBacklog=128)
+2023-06-05 15:22:30.893 INFO  11296 --- [main] [74] com.chatx.commons.ChatxApp               : ---「chatx-broker」启动完成---
+2023-06-05 15:22:31.294 INFO  11296 --- [nioEventLoopGroup-2-1] [148] io.netty.handler.logging.LoggingHandler  : [id: 0x0a288547, L:/[0:0:0:0:0:0:0:0]:1203] INACTIVE
+2023-06-05 15:22:31.294 INFO  11296 --- [nioEventLoopGroup-2-1] [148] io.netty.handler.logging.LoggingHandler  : [id: 0x0a288547, L:/[0:0:0:0:0:0:0:0]:1203] UNREGISTERED

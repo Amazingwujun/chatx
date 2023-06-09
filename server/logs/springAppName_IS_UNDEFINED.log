@@ -1,0 +1,14 @@
+2023-06-05 15:05:23.406 INFO  8032 --- [main] [55] com.chatx.broker.BrokerApplication       : Starting BrokerApplication using Java 19.0.1 on DESKTOP-7TRMIPC with PID 8032 (E:\Project\chatx\server\broker\target\classes started by admin in E:\Project\chatx\server)
+2023-06-05 15:05:23.408 INFO  8032 --- [main] [631] com.chatx.broker.BrokerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-06-05 15:05:23.647 INFO  8032 --- [main] [262] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-05 15:05:23.649 INFO  8032 --- [main] [132] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-05 15:05:23.662 INFO  8032 --- [main] [201] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-05 15:05:24.295 INFO  8032 --- [main] [61] com.chatx.broker.BrokerApplication       : Started BrokerApplication in 1.198 seconds (JVM running for 1.932)
+2023-06-05 15:05:24.297 INFO  8032 --- [main] [74] com.chatx.commons.ChatxApp               : ---「null」启动完成---
+2023-06-05 15:13:08.326 INFO  17208 --- [main] [55] com.chatx.broker.BrokerApplication       : Starting BrokerApplication using Java 19.0.1 on DESKTOP-7TRMIPC with PID 17208 (E:\Project\chatx\server\broker\target\classes started by admin in E:\Project\chatx\server)
+2023-06-05 15:13:08.328 INFO  17208 --- [main] [631] com.chatx.broker.BrokerApplication       : No active profile set, falling back to 1 default profile: "default"
+2023-06-05 15:13:08.556 INFO  17208 --- [main] [262] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-05 15:13:08.557 INFO  17208 --- [main] [132] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-05 15:13:08.570 INFO  17208 --- [main] [201] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-05 15:13:09.157 INFO  17208 --- [main] [61] com.chatx.broker.BrokerApplication       : Started BrokerApplication in 1.129 seconds (JVM running for 1.512)
+2023-06-05 15:13:09.159 INFO  17208 --- [main] [74] com.chatx.commons.ChatxApp               : ---「null」启动完成---
