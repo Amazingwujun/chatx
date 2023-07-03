@@ -13,7 +13,7 @@ import io.netty.handler.codec.DecoderResult;
 public class ChatxMessage {
 
     private final ChatxFixedHeader chatxFixedHeader;
-    private final Object payload;
+    private final byte[] payload;
     private final DecoderResult decoderResult;
 
     public static final ChatxMessage PING = new ChatxMessage(new ChatxFixedHeader(ChatxMessageType.PING, ChatxQos.AT_MOST_ONCE, 0), null);
@@ -23,25 +23,25 @@ public class ChatxMessage {
         this(chatxFixedHeader, null);
     }
 
-    public ChatxMessage(ChatxFixedHeader chatxFixedHeader, Object payload) {
+    public ChatxMessage(ChatxFixedHeader chatxFixedHeader, byte[] payload) {
         this(chatxFixedHeader, payload, DecoderResult.SUCCESS);
     }
 
-    public ChatxMessage(ChatxFixedHeader chatxFixedHeader, Object payload, DecoderResult decoderResult) {
+    public ChatxMessage(ChatxFixedHeader chatxFixedHeader, byte[] payload, DecoderResult decoderResult) {
         this.chatxFixedHeader = chatxFixedHeader;
         this.payload = payload;
         this.decoderResult = decoderResult;
     }
 
-    public ChatxFixedHeader fixedHeader(){
+    public ChatxFixedHeader fixedHeader() {
         return chatxFixedHeader;
     }
 
-    public Object payload() {
+    public byte[] payload() {
         return payload;
     }
 
-    public DecoderResult decoderResult(){
+    public DecoderResult decoderResult() {
         return decoderResult;
     }
 

@@ -4,6 +4,7 @@ import com.chatx.broker.constants.ChatxMessageType;
 import com.chatx.broker.constants.ChatxQos;
 import com.chatx.broker.entity.ChatxFixedHeader;
 import com.chatx.broker.entity.ChatxMessage;
+import com.chatx.broker.entity.ChatxVariableHeader;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -24,19 +25,26 @@ public class ChatxDecoder extends ByteToMessageDecoder {
 
     private enum DecoderState {
         READ_FIXED_HEADER,
+        READ_VARIABLE_HEADER,
         READ_PAYLOAD,
         BAD_MESSAGE
     }
 
     private DecoderState state = DecoderState.READ_FIXED_HEADER;
-    private ChatxFixedHeader fixHeader;
+    private ChatxFixedHeader fixedHeader;
+    private ChatxVariableHeader variableHeader;
     private int bytesRemainingInVariablePart;
 
     private final int maxBytesInMessage;
 
+    public ChatxDecoder() {
+        this.maxBytesInMessage = 1024 * 64;
+    }
+
     public ChatxDecoder(int maxBytesInMessage) {
         this.maxBytesInMessage = maxBytesInMessage;
     }
+
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
@@ -44,15 +52,28 @@ public class ChatxDecoder extends ByteToMessageDecoder {
             case READ_FIXED_HEADER -> {
                 try {
                     // 固定头读取
-                    fixHeader = decodeFixHeader(ctx, byteBuf);
-                    if (fixHeader == null) {
+                    fixedHeader = decodeFixHeader(byteBuf);
+                    if (fixedHeader == null) {
                         return;
                     }
-                    bytesRemainingInVariablePart = fixHeader.remainingLength();
+                    bytesRemainingInVariablePart = fixedHeader.remainingLength();
                     if (bytesRemainingInVariablePart > maxBytesInMessage) {
                         byteBuf.skipBytes(actualReadableBytes());
                         throw new TooLongFrameException("too large message: " + bytesRemainingInVariablePart + " bytes");
                     }
+                    state = DecoderState.READ_VARIABLE_HEADER;
+                } catch (Exception e) {
+                    out.add(invalidMessage(e));
+                }
+            }
+            case READ_VARIABLE_HEADER -> {
+                try {
+                    if (byteBuf.readableBytes() < bytesRemainingInVariablePart) {
+                        return;
+                    }
+                    var result = decodeVariableHeader(byteBuf);
+                    variableHeader = result.value;
+                    bytesRemainingInVariablePart -= result.numberOfBytesConsumed;
                     state = DecoderState.READ_PAYLOAD;
                 } catch (Exception e) {
                     out.add(invalidMessage(e));
@@ -63,11 +84,17 @@ public class ChatxDecoder extends ByteToMessageDecoder {
                     if (byteBuf.readableBytes() < bytesRemainingInVariablePart) {
                         return;
                     }
-
-
+                    var result = decodePayload(byteBuf);
+                    bytesRemainingInVariablePart -= result.numberOfBytesConsumed;
+                    if (bytesRemainingInVariablePart != 0) {
+                        throw new DecoderException("non-zero remaining payload bytes: " +
+                                bytesRemainingInVariablePart + " (" + fixedHeader.messageType() + ')');
+                    }
                     state = DecoderState.READ_FIXED_HEADER;
-                    fixHeader = null;
-
+                    var msg = new ChatxMessage(fixedHeader, result.value, DecoderResult.SUCCESS);
+                    fixedHeader = null;
+                    variableHeader = null;
+                    out.add(msg);
                 } catch (Exception e) {
                     out.add(invalidMessage(e));
                 }
@@ -76,7 +103,7 @@ public class ChatxDecoder extends ByteToMessageDecoder {
         }
     }
 
-    private ChatxFixedHeader decodeFixHeader(ChannelHandlerContext ctx, ByteBuf buf) {
+    private ChatxFixedHeader decodeFixHeader(ByteBuf buf) {
         if (buf.readableBytes() < 2) {
             return null;
         }
@@ -111,24 +138,46 @@ public class ChatxDecoder extends ByteToMessageDecoder {
         return new ChatxFixedHeader(messageType, ChatxQos.valueOf(qosLevel), remainingLength);
     }
 
+    private Result<ChatxVariableHeader> decodeVariableHeader(ByteBuf buf) {
+        switch (fixedHeader.messageType()) {
+            case CONNECT, CONNACK, PING, PONG, DISCONNECT -> {
+                return new Result<>(ChatxVariableHeader.EMPTY_HEADER, 0);
+            }
+            case PUBLISH -> {
+                if (fixedHeader.qosLevel() == ChatxQos.AT_MOST_ONCE) {
+                    // 读取 cmdId
+                    return new Result<>(new ChatxVariableHeader(buf.readInt(), Long.MIN_VALUE), 4);
+                } else {
+                    // 读取 cmdId, seqId
+                    return new Result<>(new ChatxVariableHeader(buf.readInt(), buf.readLong()), 12);
+                }
+            }
+            case PUBACK, PUBREC, PUBREL, PUBCOMP -> {
+                // 读取 seqId
+                return new Result<>(new ChatxVariableHeader(Integer.MIN_VALUE, buf.readLong()), 8);
+            }
+            default -> throw new IllegalArgumentException("非法的消息类型: " + fixedHeader.messageType());
+        }
+    }
+
     private ChatxMessage invalidMessage(Throwable cause) {
         state = DecoderState.BAD_MESSAGE;
-        return new ChatxMessage(fixHeader, null, DecoderResult.failure(cause));
+        return new ChatxMessage(fixedHeader, null, DecoderResult.failure(cause));
     }
 
-    private Result<?> decodePayload(ChannelHandlerContext ctx, ByteBuf buf) {
-
-        return null;
-    }
-
-    private static final class Result<T> {
-
-        public final T value;
-        public final int numberOfBytesConsumed;
-
-        Result(T value, int numberOfBytesConsumed) {
-            this.value = value;
-            this.numberOfBytesConsumed = numberOfBytesConsumed;
+    private Result<byte[]> decodePayload(ByteBuf buf) {
+        switch (fixedHeader.messageType()) {
+            case CONNECT, CONNACK, PUBLISH, PUBACK, DISCONNECT -> {
+                var data = new byte[bytesRemainingInVariablePart];
+                buf.readBytes(data);
+                return new Result<>(data, bytesRemainingInVariablePart);
+            }
+            default -> {
+                return new Result<>(null, 0);
+            }
         }
+    }
+
+    private record Result<T>(T value, int numberOfBytesConsumed) {
     }
 }
