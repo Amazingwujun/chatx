@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SignInBox</class>
+ <widget class="QWidget" name="SignInBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>311</width>
+    <height>455</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SignInBox</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+  background-color: #ffffff;
+}
+
+QLineEdit {
+  border: 1px solid #A0A0A0;
+  border-radius: 3px;
+  padding: 5px;
+  font-family: &quot;Microsoft YaHei&quot;;
+  font-size: 10pt;
+  color: #A0A0A0;
+}
+
+QPushButton {
+  font-family: &quot;Microsoft YaHei&quot;;
+}
+
+QLineEdit[echoMode=&quot;2&quot;] { 
+	lineedit-password-character: 9679;
+	lineedit-password-mask-delay: 1000;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+  font-size: 50pt;
+  font-family: &quot;Microsoft YaHei&quot;;
+  margin-bottom: 30px;
+}</string>
+     </property>
+     <property name="text">
+      <string>ChatX</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="username">
+     <property name="placeholderText">
+      <string>账号</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="password">
+     <property name="placeholderText">
+      <string>密码</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="err_msg">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+  font-size: 10pt;
+  font-family: &quot;Microsoft YaHei&quot;;
+  color: red;
+}</string>
+     </property>
+     <property name="text">
+      <string>错误信息</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="sign_in_btn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+  border-radius: 3px;
+  background-color: #07c160;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 12pt;
+}
+
+QPushButton:hover {
+  background-color: #38cd7f;
+}
+
+QPushButton:disabled {
+  background-color: grey;
+}</string>
+     </property>
+     <property name="text">
+      <string>登入</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="regsiter_btn">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+  border: 0px;
+  color: #436895;
+  font-size: 10pt;
+}</string>
+       </property>
+       <property name="text">
+        <string>注册账号</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
