@@ -1,4 +1,4 @@
-package com.chatx.commons;
+package com.chatx.commons.utils;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -14,19 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Time {
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
     public static final String DATE_FORMAT = "yyyy-MM-dd";
-
     public static final String TIME_FORMAT = "HH:mm:ss";
-
-    /**
-     * 时区-北京时间
-     */
     public static final ZoneOffset BEI_JING = ZoneOffset.of("+8");
 
-    /**
-     * 常用时间格式化类
-     */
+
     public static final DateTimeFormatter COMMON_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
     public static final DateTimeFormatter COMMON_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_FORMAT);
     public static final DateTimeFormatter COMMON_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);

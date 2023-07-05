@@ -26,7 +26,7 @@ import java.util.*;
  */
 @Slf4j
 public class ChatxApp {
-
+    public static final String PROJECT_NAME = "chatx";
 
     private static final String DEFAULT_APP_PATH = "/chatx/app";
     private static final String APPLICATION_CONFIG_FILE_NAME = "application.yml";

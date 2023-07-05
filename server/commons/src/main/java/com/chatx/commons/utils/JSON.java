@@ -1,6 +1,5 @@
 package com.chatx.commons.utils;
 
-import com.chatx.commons.Time;
 import com.chatx.commons.exception.JsonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -204,7 +203,7 @@ public class JSON {
      * <pre>
      * {
      *     ”user": {
-     *         "name":"lewin",
+     *         "name":"chatx",
      *         "age":2
      *     }
      * }
