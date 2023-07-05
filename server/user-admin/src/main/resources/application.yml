@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: user-admin
+  profiles:
+    active: dev
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost/chatx_user_admin?allowPublicKeyRetrieval=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+  redis:
+    host: localhost
+
+server:
+  port: 5656
